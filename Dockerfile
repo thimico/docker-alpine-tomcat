@@ -9,7 +9,6 @@ CATALINA_HOME=/opt/tomcat \
 CATALINA_OUT=/dev/null
 
 RUN apk upgrade --update && \
-apk add --update curl && \
 apk add --update curl unzip && \
 curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/unlimited_jce_policy.zip "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip" && \
 unzip -jo -d ${JAVA_HOME}/jre/lib/security /tmp/unlimited_jce_policy.zip && \
