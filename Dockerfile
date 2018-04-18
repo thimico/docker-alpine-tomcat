@@ -1,9 +1,9 @@
-FROM thimico/jre8
+FROM thimico/jdk7 
 
 MAINTAINER Thiago Menezes <thimico@gmail.com>
 
-ENV TOMCAT_MAJOR=8 \
-TOMCAT_VERSION=8.5.3 \
+ENV TOMCAT_MAJOR=7 \ 
+TOMCAT_VERSION=7.0.68 \ 
 TOMCAT_HOME=/opt/tomcat \
 CATALINA_HOME=/opt/tomcat \
 CATALINA_OUT=/dev/null
