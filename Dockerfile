@@ -1,4 +1,4 @@
-FROM thimico/jre8
+FROM thimico/jdk7
 
 MAINTAINER Thiago Menezes <thimico@gmail.com>
 
