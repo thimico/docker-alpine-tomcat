@@ -28,6 +28,10 @@ COPY startup.sh $CATALINA_HOME/bin/
 COPY catalina.sh $CATALINA_HOME/bin/
 COPY tomcat-users.xml $CATALINA_HOME/conf/
 
+RUN chmod a+x $CATALINA_HOME/bin/catalina.sh
+
+ENV PATH $CATALINA_HOME/bin:$PATH
 
 VOLUME ["/logs"]
 EXPOSE 8080
+CMD ["catalina.sh", "jpda", "run"]
