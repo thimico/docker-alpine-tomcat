@@ -28,6 +28,9 @@ COPY startup.sh $CATALINA_HOME/bin/
 COPY catalina.sh $CATALINA_HOME/bin/
 COPY tomcat-users.xml $CATALINA_HOME/conf/
 
+COPY hsmlib/hsm.properties /opt/tomcat/lib/
+COPY hsmlib/HSMPool-1.0.0.jar /opt/tomcat/lib/
+
 RUN chmod a+x $CATALINA_HOME/bin/catalina.sh
 
 ENV PATH $CATALINA_HOME/bin:$PATH
