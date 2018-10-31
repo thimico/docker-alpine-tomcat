@@ -1,4 +1,4 @@
-FROM thimico/jre8
+FROM thimico/jre7
 
 MAINTAINER Thiago Menezes <thimico@gmail.com>
 
@@ -9,7 +9,8 @@ CATALINA_HOME=/opt/tomcat \
 CATALINA_OUT=/dev/null
 
 RUN apk upgrade --update && \
-apk add --update curl unzip && \
+apk add --update curl unzip tzdata && \
+cp /usr/share/zoneinfo/Brazil/East  /etc/localtime && echo "Brazil/East" >  /etc/timezone && \
 mkdir /opt && \
 curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/unlimited_jce_policy.zip "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip" && \
 unzip -jo -d ${JAVA_HOME}/jre/lib/security /tmp/unlimited_jce_policy.zip && \
@@ -23,6 +24,17 @@ rm -rf /tmp/* /var/cache/apk/*
 
 COPY logging.properties ${TOMCAT_HOME}/conf/logging.properties
 COPY server.xml ${TOMCAT_HOME}/conf/server.xml
+COPY startup.sh $CATALINA_HOME/bin/
+COPY catalina.sh $CATALINA_HOME/bin/
+COPY tomcat-users.xml $CATALINA_HOME/conf/
+
+COPY hsmlib/hsm.properties /opt/tomcat/lib/
+COPY hsmlib/HSMPool-1.0.0.jar /opt/tomcat/lib/
+
+RUN chmod a+x $CATALINA_HOME/bin/catalina.sh
+
+ENV PATH $CATALINA_HOME/bin:$PATH
 
 VOLUME ["/logs"]
 EXPOSE 8080
+CMD ["catalina.sh", "jpda", "run"]
